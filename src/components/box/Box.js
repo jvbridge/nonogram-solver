@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 
 function Box({ color, state }) {
-  return <Button></Button>;
+  return <button></button>;
 }
 
 export default Box;
