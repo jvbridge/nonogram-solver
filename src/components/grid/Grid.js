@@ -5,39 +5,39 @@ function Grid(props) {
   return (
     <div className="container">
       <div className="row">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
       </div>
       <div className="row">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
       </div>
       <div className="row">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
       </div>
       <div className="row">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
       </div>
       <div className="row">
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
+        <Box state="empty" />
       </div>
     </div>
   );
