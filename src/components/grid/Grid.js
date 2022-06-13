@@ -1,9 +1,9 @@
-import React from 'react';
-import Box from '../box/Box';
+import React, { useState } from "react";
+import Box from "../box/Box";
 
 // rendering functions for the boxes
 const createBox = (state) => {
-  return <Box state="state" />;
+  return <Box state={state} />;
 };
 
 const createRow = (stateArr) => {
@@ -22,46 +22,30 @@ const createGrid = (stateArrs) => {
   return <div className="container">{ret}</div>;
 };
 
+/**
+ * Creates an x by y grid for solving your nonogram
+ * @param {Int} x how wide the grid should be
+ * @param {Int} y how tall the grid should be
+ */
+const createEmptyState = (x, y) => {
+  const ret = [];
+
+  for (let i = 0; i < y; i++) {
+    const curr = [];
+    for (let j = 0; j < x; j++) {
+      curr.push("empty");
+    }
+    ret.push(curr);
+  }
+  return ret;
+};
+
 function Grid(props) {
-  return (
-    <div className="container">
-      <div className="row">
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-      </div>
-      <div className="row">
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-      </div>
-      <div className="row">
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-      </div>
-      <div className="row">
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-      </div>
-      <div className="row">
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-        <Box state="empty" />
-      </div>
-    </div>
-  );
+  // create an empty use state for a 5x5 grid by default
+  const [gridState, setGridState] = useState(createEmptyState(5, 5));
+  console.log(gridState);
+
+  return createGrid(gridState);
 }
 
 export default Grid;
