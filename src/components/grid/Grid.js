@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import Box from "../box/Box";
 
 // rendering functions for the boxes
+
+/**
+ * Creates a box element with the state given
+ * @param {String} state
+ * @returns {Box}
+ */
 const createBox = (state) => {
   return <Box state={state} />;
 };
@@ -43,7 +49,6 @@ const createEmptyState = (x, y) => {
 function Grid(props) {
   // create an empty use state for a 5x5 grid by default
   const [gridState, setGridState] = useState(createEmptyState(5, 5));
-  console.log(gridState);
 
   return createGrid(gridState);
 }
