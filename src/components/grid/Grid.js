@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import Box from "../box/Box";
 
 const DEFAULT_SIZE_X = 5;
@@ -15,7 +15,18 @@ function Grid(props) {
    */
   const createBox = (state, x, y) => {
     const key = `x: ${x}, y: ${y}`;
-    return <Box key={key} onClick={() => cycleBoxState(x, y)} state={state} />;
+    return (
+      <Box
+        key={key}
+        onClick={() =>
+          setGridRender({
+            type: "cycleBox",
+            payload: { x, y },
+          })
+        }
+        state={state}
+      />
+    );
   };
 
   /**
@@ -64,22 +75,14 @@ function Grid(props) {
     return ret;
   };
 
-  // create an empty use state for a 5x5 grid by default
-  const [gridState, setGridState] = useState(
-    createGridState(DEFAULT_SIZE_X, DEFAULT_SIZE_Y)
-  );
-
-  const [gridRender, setGridRender] = useState(createGrid(gridState));
-  // make sure we update the grid state
-
   /**
    * cycles the state of the button at the given coordinates
    * @param {Int} x x-index of the button to cycle
    * @param {Int} y y-index of the button to cycle
    */
-  const cycleBoxState = (x, y) => {
+  const cycleBoxState = (x, y, state) => {
     // get the current state of the button
-    const currState = gridState[x][y];
+    const currState = state[y][x];
     let newState;
     switch (currState) {
       case "empty":
@@ -94,14 +97,43 @@ function Grid(props) {
       default:
         throw new Error("Invalid state for block");
     }
-    let newGrid = gridState;
+    let newGrid = state;
     newGrid[y][x] = newState;
-    console.log("setting new gridState: ", newGrid);
-    setGridState(newGrid);
-    setGridRender(createGrid(gridState));
+    return;
   };
 
-  return gridRender;
+  // create an empty use state for a 5x5 grid by default
+  const [gridState, setGridState] = useState(
+    createGridState(DEFAULT_SIZE_X, DEFAULT_SIZE_Y)
+  );
+
+  const initGridState = () => {
+    return createGrid(createGridState(DEFAULT_SIZE_X, DEFAULT_SIZE_Y));
+  };
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case "cycleBox":
+        console.log("cycling the box");
+        const { x, y } = action.payload;
+        console.log(`x: ${x}, y: ${y}, state: ${gridState}`);
+        const newState = cycleBoxState(x, y, gridState);
+        setGridState(newState);
+        return createGrid(gridState);
+      case "overWrite":
+        return createGrid(action.payload);
+      default:
+        throw new Error("invalid reducer type");
+    }
+  }
+
+  const [gridRender, setGridRender] = useReducer(
+    reducer,
+    createGridState(DEFAULT_SIZE_X, DEFAULT_SIZE_Y),
+    initGridState
+  );
+  // make sure we update the grid state
+  return <div>{gridRender}</div>;
 }
 
 export default Grid;
