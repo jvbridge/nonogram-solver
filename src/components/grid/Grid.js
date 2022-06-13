@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Box from "../box/Box";
 
 const DEFAULT_SIZE_X = 5;
@@ -95,7 +95,7 @@ function Grid(props) {
         throw new Error("Invalid state for block");
     }
     let newGrid = gridState;
-    newGrid[x][y] = newState;
+    newGrid[y][x] = newState;
     console.log("setting new gridState: ", newGrid);
     setGridState(newGrid);
     setGridRender(createGrid(gridState));
