@@ -1,16 +1,22 @@
-import React from 'react';
+import React from "react";
 
-function Box({ state }) {
+function Box({ state, onClick }) {
+  let emoji;
   switch (state) {
-    case 'empty':
-      return <button>⬜</button>;
-    case 'no':
-      return <button>❎</button>;
-    case 'block':
-      return <button>⬛</button>;
+    case "empty":
+      emoji = "⬜";
+      break;
+    case "no":
+      emoji = "❎";
+      break;
+    case "block":
+      emoji = "⬛";
+      break;
     default:
-      throw new Error('no state passed in');
+      throw new Error("no state passed in");
   }
+
+  return <button onClick={onClick}>{emoji}</button>;
 }
 
 export default Box;
