@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "../box/Box";
+
+const DEFAULT_SIZE_X = 5;
+const DEFAULT_SIZE_Y = 5;
+const DEFAULT_BOX_STATE = "empty";
 
 function Grid(props) {
   // rendering functions for the boxes
@@ -34,6 +38,7 @@ function Grid(props) {
   };
 
   const createGrid = (stateArrs) => {
+    console.log("creating new grid");
     const ret = [];
     stateArrs.forEach((row, index) => {
       ret.push(createRow(row, index));
@@ -46,13 +51,13 @@ function Grid(props) {
    * @param {Int} x how wide the grid should be
    * @param {Int} y how tall the grid should be
    */
-  const createEmptyState = (x, y) => {
+  const createGridState = (x, y) => {
     const ret = [];
 
     for (let i = 0; i < y; i++) {
       const curr = [];
       for (let j = 0; j < x; j++) {
-        curr.push("empty");
+        curr.push(DEFAULT_BOX_STATE);
       }
       ret.push(curr);
     }
@@ -60,7 +65,15 @@ function Grid(props) {
   };
 
   // create an empty use state for a 5x5 grid by default
-  const [gridState, setGridState] = useState(createEmptyState(5, 5));
+  const [gridState, setGridState] = useState(
+    createGridState(DEFAULT_SIZE_X, DEFAULT_SIZE_Y)
+  );
+
+  const [gridRender, setGridRender] = useState(createGrid(gridState));
+  // make sure we update the grid state
+  useEffect(() => {
+    setGridRender(createGrid(gridState));
+  }, [gridRender, gridState, createGrid]);
 
   /**
    * cycles the state of the button at the given coordinates
@@ -90,7 +103,7 @@ function Grid(props) {
     setGridState(newGrid);
   };
 
-  return createGrid(gridState);
+  return gridRender;
 }
 
 export default Grid;
