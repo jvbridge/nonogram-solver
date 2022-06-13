@@ -99,7 +99,7 @@ function Grid(props) {
     }
     let newGrid = state;
     newGrid[y][x] = newState;
-    return;
+    return newGrid;
   };
 
   // create an empty use state for a 5x5 grid by default
@@ -119,8 +119,9 @@ function Grid(props) {
         console.log(`x: ${x}, y: ${y}, state: ${gridState}`);
         const newState = cycleBoxState(x, y, gridState);
         setGridState(newState);
-        return createGrid(gridState);
+        return createGrid(newState);
       case "overWrite":
+        setGridState(action.payload);
         return createGrid(action.payload);
       default:
         throw new Error("invalid reducer type");
