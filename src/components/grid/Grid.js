@@ -71,9 +71,6 @@ function Grid(props) {
 
   const [gridRender, setGridRender] = useState(createGrid(gridState));
   // make sure we update the grid state
-  useEffect(() => {
-    setGridRender(createGrid(gridState));
-  }, [gridRender, gridState, createGrid]);
 
   /**
    * cycles the state of the button at the given coordinates
@@ -101,6 +98,7 @@ function Grid(props) {
     newGrid[x][y] = newState;
     console.log("setting new gridState: ", newGrid);
     setGridState(newGrid);
+    setGridRender(createGrid(gridState));
   };
 
   return gridRender;
